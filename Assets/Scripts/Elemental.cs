@@ -4,8 +4,11 @@ using System.Collections;
 public class Elemental : MonoBehaviour {
 
 	public float damage = 1.0f;
-	public float range = 10.0f;
+	public float range = 20.0f;
 	public float cooldown = 1.0f;
+
+	private Enemy currentTarget = null;
+	private float lastAttack = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,12 +17,47 @@ public class Elemental : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (currentTarget == null) {
+			currentTarget = getClosestEnemy ();
+		} else if (isInRange (currentTarget)) {
+			if (Time.time > lastAttack + cooldown) {
+				spawnProjectile ();
+				lastAttack = Time.time;
+			}
+		}
 	}
 
 	private Enemy getClosestEnemy(){
+		float closest = Mathf.Infinity;
+		GameObject enemy = null;
 		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")){
-			float dist = (obj.transform.position - transform.position).sqrMagnitude;
+			Vector3 direction = (obj.transform.position - transform.position);
+			RaycastHit hitInfo;
+			if (Physics.Raycast (transform.position, direction, out hitInfo, 500.0f)) {
+				if (hitInfo.collider.tag != "Enemy") {
+					continue;
+				}
+				float dist = direction.sqrMagnitude;
+				if (dist < closest) {
+					closest = dist;
+					enemy = obj;
+				}
+			}
 		}
+
+		if (enemy != null) {
+			return enemy.GetComponent<Enemy>();
+		}
+		return null;
+	}
+
+	private bool isInRange(Enemy target){
+		float dist = (target.transform.position - transform.position).sqrMagnitude;
+		return dist < range * range;
+	}
+
+	private void spawnProjectile(){
+		GameObject projectile = Instantiate (Resources.Load ("Projectile"), transform.position, new Quaternion(0, 0, 0, 0)) as GameObject;
+		projectile.GetComponent<Projectile> ().setTarget (currentTarget.gameObject, damage);
 	}
 }

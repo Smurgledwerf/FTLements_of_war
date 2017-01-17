@@ -16,4 +16,11 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 		transform.Translate (Vector3.right * speed * Time.deltaTime);
 	}
+
+	public void takeDamage(float amount){
+		health -= amount;
+		if (health <= 0) {
+			DestroyObject (gameObject);
+		}
+	}
 }
