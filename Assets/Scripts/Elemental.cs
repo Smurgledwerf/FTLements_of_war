@@ -33,7 +33,7 @@ public class Elemental : MonoBehaviour {
 		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Enemy")){
 			Vector3 direction = (obj.transform.position - transform.position);
 			RaycastHit hitInfo;
-			if (Physics.Raycast (transform.position, direction, out hitInfo, 500.0f)) {
+			if (Physics.Raycast (transform.position, direction.normalized, out hitInfo, 500.0f)) {
 				if (hitInfo.collider.tag != "Enemy") {
 					continue;
 				}
@@ -46,14 +46,16 @@ public class Elemental : MonoBehaviour {
 		}
 
 		if (enemy != null) {
-			return enemy.GetComponent<Enemy>();
+			//print (enemy.name);
+			return enemy.GetComponentInParent<Enemy>();
 		}
 		return null;
 	}
 
 	private bool isInRange(Enemy target){
+		// TODO: this should check line of sight as well
 		float dist = (target.transform.position - transform.position).sqrMagnitude;
-		return dist < range * range;
+		return dist < (range * range);
 	}
 
 	private void spawnProjectile(){

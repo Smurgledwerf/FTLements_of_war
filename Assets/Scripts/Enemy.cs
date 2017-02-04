@@ -7,13 +7,19 @@ public class Enemy : MonoBehaviour {
 	public float speed = 1.0f;
 	public float damage = 1.0f;
 
+	public Transform center;
+
 	// Use this for initialization
 	void Start () {
-	
+		center = transform.Find ("Center");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Move ();
+	}
+
+	private void Move(){
 		transform.Translate (Vector3.right * speed * Time.deltaTime);
 	}
 

@@ -56,10 +56,12 @@ public class Elevator : MonoBehaviour {
 	public void StopElevator(){
 		moving = false;
 		atStart = !atStart;
-		rider.transform.SetParent (null);
-		rider.Warp (rider.transform.position);
-		rider.Resume ();
-		print (rider.destination);
-		rider.SetDestination (rider.GetComponent<test> ().destination.position);
+		if (rider != null) {
+			rider.transform.SetParent (null);
+			rider.Warp (rider.transform.position);
+			rider.Resume ();
+			//print (rider.destination);
+			rider.SetDestination (rider.GetComponent<test> ().destination.position);
+		}
 	}
 }

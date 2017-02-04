@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
+	public float speed = 10.0f;
+
 	private float damage = 1.0f;
-	private float speed = 5.0f;
-	private GameObject target = null;
+	private Enemy target = null;
 	private Vector3 direction;
 
 	// Use this for initialization
@@ -17,14 +18,14 @@ public class Projectile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (target != null) {
-			direction = target.transform.position - transform.position;
+			direction = target.center.position - transform.position;
 		}
 		transform.Translate (direction.normalized * speed * Time.deltaTime);
 	}
 
 	public void setTarget(GameObject obj, float dmg){
 		damage = dmg;
-		target = obj;
+		target = obj.GetComponent<Enemy>();
 	}
 
 	void OnCollisionEnter (Collision collision) {
