@@ -18,6 +18,10 @@ public class Spawner : MonoBehaviour {
 		if (Time.time > lastSpawn + cooldown) {
 			spawnEnemy ();
 		}
+		// just for fun and testing
+		else if(Input.GetKeyDown(KeyCode.Space)){
+			spawnEnemy();
+		}
 	}
 
 	private void spawnEnemy(){
