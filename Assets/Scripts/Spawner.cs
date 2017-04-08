@@ -26,6 +26,7 @@ public class Spawner : MonoBehaviour {
 
 	private void spawnEnemy(){
 		GameObject enemy = Instantiate (Resources.Load ("Enemy"), transform.position, transform.rotation) as GameObject;
+		enemy.GetComponent<Enemy> ().OnSpawn ();
 		lastSpawn = Time.time;
 	}
 }

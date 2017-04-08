@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (target != null) {
-			direction = target.center.position - transform.position;
+			direction = target.GetCenter().position - transform.position;
 		}
 		transform.Translate (direction.normalized * speed * Time.deltaTime);
 	}
