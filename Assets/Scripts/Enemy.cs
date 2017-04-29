@@ -4,8 +4,8 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public float health = 10.0f;
-	//public float speed = 1.0f;
 	public float damage = 1.0f;
+	public float speed = 4.0f;
 
 	private Transform center;
 	private float maxHealth;
@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Move ();
+		
 	}
 
 	public void OnSpawn(){
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour {
 		return center;
 	}
 
-	public void takeDamage(float amount){
+	public void takeDamage(float amount, Elemental.ElementalType element){
 		health -= amount;
 		if (health <= 0) {
 			DestroyObject (gameObject);
@@ -42,6 +42,10 @@ public class Enemy : MonoBehaviour {
 		if (healthBar != null) {
 			healthBar.UpdateHealth (health / maxHealth);
 		}
+	}
+
+	private void applyStatus(Elemental.ElementalType element){
+
 	}
 
 	//[RequireComponent (typeof (UnityEngine.AI.NavMeshAgent))]

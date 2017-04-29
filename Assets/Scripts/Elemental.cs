@@ -3,6 +3,15 @@ using System.Collections;
 
 public class Elemental : MonoBehaviour {
 
+	public enum ElementalType
+	{
+		Water,
+		Fire,
+		Earth,
+		Wind
+	};
+
+	public ElementalType element;
 	public float damage = 1.0f;
 	public float range = 20.0f;
 	public float cooldown = 1.0f;
@@ -76,6 +85,6 @@ public class Elemental : MonoBehaviour {
 
 	private void spawnProjectile(){
 		GameObject projectile = Instantiate (Resources.Load ("Projectile"), projectileSpawn.position, new Quaternion(0, 0, 0, 0)) as GameObject;
-		projectile.GetComponent<Projectile> ().setTarget (currentTarget.gameObject, damage);
+		projectile.GetComponent<Projectile> ().OnSpawn (currentTarget.gameObject, damage, element);
 	}
 }

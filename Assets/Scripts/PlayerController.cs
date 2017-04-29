@@ -13,7 +13,12 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (selecting) {
+			// drag select stuff
+		}
+		else if (Input.GetMouseButtonDown(0)) {
+			// check what's being clicked on
+		}
 	}
 
 }
